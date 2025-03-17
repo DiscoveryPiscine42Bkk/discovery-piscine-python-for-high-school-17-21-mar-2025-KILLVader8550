@@ -4,7 +4,7 @@ import sys
 
 user_input = input("What was the parameter? ")
 
-if (sys.argv == user_input):
+if (sys.argv[1] == user_input):
     print("Good Job!")
 else:
     print("Nope, sorry...")
