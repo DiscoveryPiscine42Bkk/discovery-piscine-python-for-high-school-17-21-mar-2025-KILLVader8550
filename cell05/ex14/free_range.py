@@ -11,4 +11,3 @@ if (len(parameter) == 2):
     print(result)
 else:
     print("none")
-    

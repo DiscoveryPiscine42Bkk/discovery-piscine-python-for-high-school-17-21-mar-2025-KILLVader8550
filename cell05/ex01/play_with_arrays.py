@@ -4,7 +4,7 @@ numbers = [2, 8, 9, 48, 8, 22, -12, 2]
 new_arr = []
 
 for i in numbers:
-    new_arr.append(i+1)
+    new_arr.append(i+2)
 
 print(numbers)
 print(new_arr)
