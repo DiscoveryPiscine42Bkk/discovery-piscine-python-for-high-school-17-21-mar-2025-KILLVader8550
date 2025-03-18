@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 
-def greetings (name=None):
-    if (name is None):
-        print("Hello, noble stranger.")
-    elif (type(name) != str):
-        print("Error! It was not a name.")
+def greetings (name="noble stanger"):
+    if isinstance(name, str):
+        print(f"Hello, {name}")
     else:
-        print(f"Hello, {name}.")
+        print("Error! It was not a name.")
 
 greetings('Alexandra')
 greetings('Wil')
