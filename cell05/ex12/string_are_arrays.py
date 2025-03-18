@@ -15,4 +15,4 @@ for i in range (len(result)):
 if (count != 0):
     print("z"*count)
 else:
-    print("None")
+    print("none")
