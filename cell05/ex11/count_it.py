@@ -8,3 +8,5 @@ else:
     print(f"parameters: {len(sys.argv)-1}")
     for i in sys.argv[1:]:
         print(f"{i}: {len(i)}")
+
+        ["hello world","wefjoiwej",["weoijw","werjfgowij"]]
