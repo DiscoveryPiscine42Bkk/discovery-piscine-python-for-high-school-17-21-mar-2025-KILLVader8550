@@ -1,9 +1,9 @@
 text = """\
-k....
-.r...
-..q..
-....
+...r.
 .....
+..a..
+.....
+k..q.\
 """
 def main(text):
     rook = []
@@ -29,69 +29,74 @@ def main(text):
     for y in range(len(arr)):
         row = arr[y]
         for x in range (len(row)):
-            if row[x].upper() not in {"R", "K", "P", "B", "Q", "."}:
-                return "error"
-            else:
-                match row[x].upper():
-                    case "R":
-                        rook.append([x, y])
-                        postion_of_every_pawn.append([x, y])
-                    case "K":
-                        king.append([x, y])
-                        postion_of_every_pawn.append([x, y])
-                    case "P":
-                        pawn.append([x, y])
-                        postion_of_every_pawn.append([x, y])
-                    case "B":
-                        bishop.append([x, y])
-                        postion_of_every_pawn.append([x, y])
-                    case "Q":
-                        queen.append([x, y])
-                        postion_of_every_pawn.append([x, y])
-                    case _:
-                        pass
+            match row[x].upper():
+                case "R":
+                    rook.append([x, y])
+                    postion_of_every_pawn.append([x, y])
+                case "K":
+                    king.append([x, y])
+                    postion_of_every_pawn.append([x, y])
+                case "P":
+                    pawn.append([x, y])
+                    postion_of_every_pawn.append([x, y])
+                case "B":
+                    bishop.append([x, y])
+                    postion_of_every_pawn.append([x, y])
+                case "Q":
+                    queen.append([x, y])
+                    postion_of_every_pawn.append([x, y])
+                case _:
+                    pass
+    
+    def append_func(member):
+        for i in member:
+            postion_of_every_pawn.append(i)
+
+    append_func(rook)
+    append_func(pawn)
+    append_func(bishop)
+    append_func(queen)
+
+    print(postion_of_every_pawn)
 
     if len(king) != 1:
-        return "Where the fuck is your king!!!!"
+        return "error"
     
     for row in arr:
         print(row)
     
     print(f"r: {rook} k: {king}, q: {queen}, b: {bishop}, p:{pawn}")
-
+    
+    #condition check-----------
     def rook_move(x, y):
         def move_right(x_new):
             while True:
-                answer = [x_new,y]
-                if (answer not in postion_of_every_pawn) and (x_new < board_size) and (y <= board_size):
-                    move_path.append(answer)
+                if ((x_new,y) not in postion_of_every_pawn) and (x_new <= board_size) and (y <= board_size):
+                    move_path.append([x_new,y])
                     x_new += 1
                 else:
                     break
 
         def move_left(x_new):
             while True:
-                answer = [x_new,y]
-                if (answer not in postion_of_every_pawn) and (x_new > 0) and (y <= board_size):
-                    move_path.append(answer)
+                if ((x_new,y) not in postion_of_every_pawn) and (x_new >= 0) and (y <= board_size):
+                    move_path.append([x_new,y])
                     x_new -= 1
                 else:
                     break
 
         def move_up(y_new):
             while True:
-                answer = [x,y_new]
-                if (answer not in postion_of_every_pawn) and (y_new < board_size):
-                    move_path.append(answer)
+                if ((x,y_new) not in postion_of_every_pawn) and (y_new <= board_size):
+                    move_path.append([x,y_new])
                     y_new += 1
                 else:
                     break
 
         def move_down(y_new):
             while True:
-                answer = [x,y_new]
-                if (answer not in postion_of_every_pawn) and (y_new > 0):
-                    move_path.append(answer)
+                if ((x, y_new) not in postion_of_every_pawn) and (y_new >= 0):
+                    move_path.append([x, y_new])
                     y_new -= 1
                 else:
                     break
@@ -104,7 +109,7 @@ def main(text):
     def bishop_move (x,y):
         def move_up_right(x_new, y_new):
             while True:
-                if ([x_new,y_new] not in postion_of_every_pawn) and (y_new < board_size) and (x_new < board_size):
+                if ((x_new,y_new) not in postion_of_every_pawn) and (y_new <= board_size) and (x_new <= board_size):
                     move_path.append([x_new + 1, y_new + 1])
                     x_new += 1
                     y_new += 1
@@ -113,7 +118,7 @@ def main(text):
         
         def move_down_left(x_new, y_new):
             while True:
-                if ([x_new,y_new] not in postion_of_every_pawn) and (y_new > 0) and (x_new > 0):
+                if ((x_new,y_new) not in postion_of_every_pawn) and (y_new >= 0) and (x_new >= 0):
                     move_path.append([x_new - 1, y_new - 1])
                     x_new -= 1
                     y_new -= 1
@@ -122,20 +127,16 @@ def main(text):
 
         def move_down_right(x_new, y_new):
             while True:
-                if ([x_new,y_new] not in postion_of_every_pawn) and (y_new > 0) and (x_new < board_size):
+                if ((x_new,y_new) not in postion_of_every_pawn) and (y_new >= 0) and (x_new <= board_size):
                     move_path.append([x_new + 1, y_new - 1])
                     x_new += 1
                     y_new -= 1
                 else:
                     break
-        def rook_moves(x, y, board_size=8):
-            moves = [(x, j) for j in range(board_size) if j != y] + [(i, y) for i in range(board_size) if i != x]
-            return moves
-
-
+        
         def move_up_left(x_new, y_new):
             while True:
-                if ([x_new,y_new] not in postion_of_every_pawn) and (y_new < board_size) and (x_new > 0):
+                if ((x_new,y_new) not in postion_of_every_pawn) and (y_new <= board_size) and (x_new >= 0):
                     move_path.append([x_new - 1, y_new + 1])
                     x_new -= 1
                     y_new += 1
@@ -150,7 +151,7 @@ def main(text):
     def queen_move(x, y):
         def move_up_right(x_new, y_new):
             while True:
-                if ([x_new,y_new] not in postion_of_every_pawn) and (y_new < board_size) and (x_new < board_size):
+                if ((x_new,y_new) not in postion_of_every_pawn) and (y_new <= board_size) and (x_new <= board_size):
                     move_path.append([x_new + 1, y_new + 1])
                     x_new += 1
                     y_new += 1
@@ -159,7 +160,7 @@ def main(text):
         
         def move_down_left(x_new, y_new):
             while True:
-                if ([x_new,y_new] not in postion_of_every_pawn) and (y_new > 0) and (x_new > 0):
+                if ((x_new,y_new) not in postion_of_every_pawn) and (y_new >= 0) and (x_new >= 0):
                     move_path.append([x_new - 1, y_new - 1])
                     x_new -= 1
                     y_new -= 1
@@ -168,7 +169,7 @@ def main(text):
 
         def move_down_right(x_new, y_new):
             while True:
-                if ([x_new,y_new] not in postion_of_every_pawn) and (y_new > 0) and (x_new < board_size):
+                if ((x_new,y_new) not in postion_of_every_pawn) and (y_new >= 0) and (x_new <= board_size):
                     move_path.append([x_new + 1, y_new - 1])
                     x_new += 1
                     y_new -= 1
@@ -177,7 +178,7 @@ def main(text):
         
         def move_up_left(x_new, y_new):
             while True:
-                if ([x_new,y_new] not in postion_of_every_pawn) and (y_new < board_size) and (x_new > 0):
+                if ((x_new,y_new) not in postion_of_every_pawn) and (y_new <= board_size) and (x_new >= 0):
                     move_path.append([x_new - 1, y_new + 1])
                     x_new -= 1
                     y_new += 1
@@ -185,39 +186,37 @@ def main(text):
                     break
         def move_right(x_new):
             while True:
-                answer = [x_new,y]
-                if (answer not in postion_of_every_pawn) and (x_new < board_size) and (y <= board_size):
-                    move_path.append(answer)
+                if ((x_new,y) not in postion_of_every_pawn) and (x_new <= board_size):
+                    move_path.append([x_new,y])
                     x_new += 1
                 else:
                     break
 
         def move_left(x_new):
             while True:
-                answer = [x_new,y]
-                if (answer not in postion_of_every_pawn) and (x_new > 0) and (y <= board_size):
-                    move_path.append(answer)
+                if ((x_new,y) not in postion_of_every_pawn) and (x_new >= 0):
+                    move_path.append([x_new,y])
                     x_new -= 1
+                    print(x_new,y)
                 else:
                     break
 
         def move_up(y_new):
             while True:
-                answer = [x,y_new]
-                if (answer not in postion_of_every_pawn) and (y_new < board_size):
-                    move_path.append(answer)
+                if ((x,y_new) not in postion_of_every_pawn) and (y_new <= board_size):
+                    move_path.append([x,y_new])
                     y_new += 1
                 else:
                     break
 
         def move_down(y_new):
             while True:
-                answer = [x,y_new]
-                if (answer not in postion_of_every_pawn) and (y_new > 0):
-                    move_path.append(answer)
+                if ((x, y_new) not in postion_of_every_pawn) and (y_new >= 0):
+                    move_path.append([x, y_new])
                     y_new -= 1
                 else:
                     break
+
         move_up_right(x,y)
         move_down_left(x, y)
         move_down_right(x, y)
@@ -244,10 +243,11 @@ def main(text):
 
     print(move_path)
     print(f"King: {king}")
+
     if king[0] in move_path:
         return "Success"
     else:
         return "Fail"
-    
+
 if __name__ == "__main__":
     print(main(text))
