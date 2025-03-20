@@ -1,52 +1,77 @@
+move_path = []
 
-text = """\
-R...
-.K..
-.P..
-....\
-"""
+class Move_pattern:
+    def __init__ (self, x, y, board_size, postion_of_every_pawn, ):
+        self.x = x
+        self.y = y
+        self.board_size = board_size
+        self.position_of_every_pawn = postion_of_every_pawn
+    
+    def move_up_right(self, x_new, y_new):
+        while True:
+            if ((x_new,y_new) not in self.postion_of_every_pawn) and (y_new <= self.board_size) and (x_new <= self.board_size):
+                move_path.append([x_new + 1, y_new + 1])
+                x_new += 1
+                y_new += 1
+            else:
+                break
+        
+    def move_down_left(x_new, y_new):
+        while True:
+            if ((x_new,y_new) not in postion_of_every_pawn) and (y_new >= 0) and (x_new >= 0):
+                move_path.append([x_new - 1, y_new - 1])
+                x_new -= 1
+                y_new -= 1
+            else:
+                break
 
-rook = []
-king =  []
-pawn = []
-bishop = []
-queen = []
+    def move_down_right(x_new, y_new):
+        while True:
+            if ((x_new,y_new) not in postion_of_every_pawn) and (y_new >= 0) and (x_new <= board_size):
+                move_path.append([x_new + 1, y_new - 1])
+                x_new += 1
+                y_new -= 1
+            else:
+                break
+    
+    def move_up_left(x_new, y_new):
+        while True:
+            if ((x_new,y_new) not in postion_of_every_pawn) and (y_new <= board_size) and (x_new >= 0):
+                move_path.append([x_new - 1, y_new + 1])
+                x_new -= 1
+                y_new += 1
+            else:
+                break
+    def move_right(x_new):
+        while True:
+            if ((x_new,y) not in postion_of_every_pawn) and (x_new <= board_size):
+                move_path.append([x_new,y])
+                x_new += 1
+            else:
+                break
 
-arr = [list(line) for line in text.splitlines() if line.strip()]
-print(arr)
-print(arr[1])
-print(len(arr[1]))
+    def move_left(x_new):
+        while True:
+            if ((x_new,y) not in postion_of_every_pawn) and (x_new >= 0):
+                move_path.append([x_new,y])
+                x_new -= 1
+                print(x_new,y)
+            else:
+                break
 
-for row in arr:
-    print(row)
-    match row:
-        case _ if(len(row) != len(arr)):
-            #return "error"
-            print("error")
-        case _ if(len(row) > 20):
-            #return "error"
-            print("error")
+    def move_up(y_new):
+        while True:
+            if ((x,y_new) not in postion_of_every_pawn) and (y_new <= board_size):
+                move_path.append([x,y_new])
+                y_new += 1
+            else:
+                break
 
-#row as x
-#column as y
-for x in range(len(arr)):
-    row = arr[x]
-    for y in range (len(row)):
-        match row[y].upper():
-            case "R":
-                rook.append((x, y))
-            case "K":
-                king.append((x, y))
-            case "P":
-                pawn.append((x, y))
-            case "B":
-                bishop.append((x, y))
-            case _:
-                pass
+    def move_down(y_new):
+        while True:
+            if ((x, y_new) not in postion_of_every_pawn) and (y_new >= 0):
+                move_path.append([x, y_new])
+                y_new -= 1
+            else:
+                break
 
-if len(king) > 1:
-    #return "error"
-    print("error")
-
-print(rook, king, bishop, pawn)
-print(arr)

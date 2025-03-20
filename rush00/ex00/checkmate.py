@@ -1,11 +1,4 @@
-text = """\
-...r.
-.....
-..a..
-.....
-k..q.\
-"""
-def main(text):
+def checkmate(board):
     rook = []
     king =  []
     pawn = []
@@ -14,7 +7,7 @@ def main(text):
     move_path = []
     postion_of_every_pawn = []
 
-    arr = [list(line) for line in text.splitlines() if line.strip()]
+    arr = [list(line) for line in board.splitlines() if line.strip()]
     board_size = len(arr)
     
     for row in arr:
@@ -68,155 +61,88 @@ def main(text):
     print(f"r: {rook} k: {king}, q: {queen}, b: {bishop}, p:{pawn}")
     
     #condition check-----------
+    def move_up_right(x_new, y_new):
+        while True:
+            if ((x_new,y_new) not in postion_of_every_pawn) and (y_new <= board_size) and (x_new <= board_size):
+                move_path.append([x_new + 1, y_new + 1])
+                x_new += 1
+                y_new += 1
+            else:
+                break
+    
+    def move_down_left(x_new, y_new):
+        while True:
+            if ((x_new,y_new) not in postion_of_every_pawn) and (y_new >= 0) and (x_new >= 0):
+                move_path.append([x_new - 1, y_new - 1])
+                x_new -= 1
+                y_new -= 1
+            else:
+                break
+
+    def move_down_right(x_new, y_new):
+        while True:
+            if ((x_new,y_new) not in postion_of_every_pawn) and (y_new >= 0) and (x_new <= board_size):
+                move_path.append([x_new + 1, y_new - 1])
+                x_new += 1
+                y_new -= 1
+            else:
+                break
+    
+    def move_up_left(x_new, y_new):
+        while True:
+            if ((x_new,y_new) not in postion_of_every_pawn) and (y_new <= board_size) and (x_new >= 0):
+                move_path.append([x_new - 1, y_new + 1])
+                x_new -= 1
+                y_new += 1
+            else:
+                break
+    def move_right(x_new):
+        while True:
+            if ((x_new,y) not in postion_of_every_pawn) and (x_new <= board_size):
+                move_path.append([x_new,y])
+                x_new += 1
+            else:
+                break
+
+    def move_left(x_new):
+        while True:
+            if ((x_new,y) not in postion_of_every_pawn) and (x_new >= 0):
+                move_path.append([x_new,y])
+                x_new -= 1
+                print(x_new,y)
+            else:
+                break
+
+    def move_up(y_new):
+        while True:
+            if ((x,y_new) not in postion_of_every_pawn) and (y_new <= board_size):
+                move_path.append([x,y_new])
+                y_new += 1
+            else:
+                break
+
+    def move_down(y_new):
+        while True:
+            if ((x, y_new) not in postion_of_every_pawn) and (y_new >= 0):
+                move_path.append([x, y_new])
+                y_new -= 1
+            else:
+                break
+
+
     def rook_move(x, y):
-        def move_right(x_new):
-            while True:
-                if ((x_new,y) not in postion_of_every_pawn) and (x_new <= board_size) and (y <= board_size):
-                    move_path.append([x_new,y])
-                    x_new += 1
-                else:
-                    break
-
-        def move_left(x_new):
-            while True:
-                if ((x_new,y) not in postion_of_every_pawn) and (x_new >= 0) and (y <= board_size):
-                    move_path.append([x_new,y])
-                    x_new -= 1
-                else:
-                    break
-
-        def move_up(y_new):
-            while True:
-                if ((x,y_new) not in postion_of_every_pawn) and (y_new <= board_size):
-                    move_path.append([x,y_new])
-                    y_new += 1
-                else:
-                    break
-
-        def move_down(y_new):
-            while True:
-                if ((x, y_new) not in postion_of_every_pawn) and (y_new >= 0):
-                    move_path.append([x, y_new])
-                    y_new -= 1
-                else:
-                    break
-
         move_right(x)
         move_down(x)
         move_up(y)
         move_left(y)
 
     def bishop_move (x,y):
-        def move_up_right(x_new, y_new):
-            while True:
-                if ((x_new,y_new) not in postion_of_every_pawn) and (y_new <= board_size) and (x_new <= board_size):
-                    move_path.append([x_new + 1, y_new + 1])
-                    x_new += 1
-                    y_new += 1
-                else:
-                    break
-        
-        def move_down_left(x_new, y_new):
-            while True:
-                if ((x_new,y_new) not in postion_of_every_pawn) and (y_new >= 0) and (x_new >= 0):
-                    move_path.append([x_new - 1, y_new - 1])
-                    x_new -= 1
-                    y_new -= 1
-                else:
-                    break
-
-        def move_down_right(x_new, y_new):
-            while True:
-                if ((x_new,y_new) not in postion_of_every_pawn) and (y_new >= 0) and (x_new <= board_size):
-                    move_path.append([x_new + 1, y_new - 1])
-                    x_new += 1
-                    y_new -= 1
-                else:
-                    break
-        
-        def move_up_left(x_new, y_new):
-            while True:
-                if ((x_new,y_new) not in postion_of_every_pawn) and (y_new <= board_size) and (x_new >= 0):
-                    move_path.append([x_new - 1, y_new + 1])
-                    x_new -= 1
-                    y_new += 1
-                else:
-                    break
-                
         move_up_right(x,y)
         move_down_left(x, y)
         move_down_right(x, y)
         move_up_left(x, y)
 
     def queen_move(x, y):
-        def move_up_right(x_new, y_new):
-            while True:
-                if ((x_new,y_new) not in postion_of_every_pawn) and (y_new <= board_size) and (x_new <= board_size):
-                    move_path.append([x_new + 1, y_new + 1])
-                    x_new += 1
-                    y_new += 1
-                else:
-                    break
-        
-        def move_down_left(x_new, y_new):
-            while True:
-                if ((x_new,y_new) not in postion_of_every_pawn) and (y_new >= 0) and (x_new >= 0):
-                    move_path.append([x_new - 1, y_new - 1])
-                    x_new -= 1
-                    y_new -= 1
-                else:
-                    break
-
-        def move_down_right(x_new, y_new):
-            while True:
-                if ((x_new,y_new) not in postion_of_every_pawn) and (y_new >= 0) and (x_new <= board_size):
-                    move_path.append([x_new + 1, y_new - 1])
-                    x_new += 1
-                    y_new -= 1
-                else:
-                    break
-        
-        def move_up_left(x_new, y_new):
-            while True:
-                if ((x_new,y_new) not in postion_of_every_pawn) and (y_new <= board_size) and (x_new >= 0):
-                    move_path.append([x_new - 1, y_new + 1])
-                    x_new -= 1
-                    y_new += 1
-                else:
-                    break
-        def move_right(x_new):
-            while True:
-                if ((x_new,y) not in postion_of_every_pawn) and (x_new <= board_size):
-                    move_path.append([x_new,y])
-                    x_new += 1
-                else:
-                    break
-
-        def move_left(x_new):
-            while True:
-                if ((x_new,y) not in postion_of_every_pawn) and (x_new >= 0):
-                    move_path.append([x_new,y])
-                    x_new -= 1
-                    print(x_new,y)
-                else:
-                    break
-
-        def move_up(y_new):
-            while True:
-                if ((x,y_new) not in postion_of_every_pawn) and (y_new <= board_size):
-                    move_path.append([x,y_new])
-                    y_new += 1
-                else:
-                    break
-
-        def move_down(y_new):
-            while True:
-                if ((x, y_new) not in postion_of_every_pawn) and (y_new >= 0):
-                    move_path.append([x, y_new])
-                    y_new -= 1
-                else:
-                    break
-
         move_up_right(x,y)
         move_down_left(x, y)
         move_down_right(x, y)
@@ -245,9 +171,6 @@ def main(text):
     print(f"King: {king}")
 
     if king[0] in move_path:
-        return "Success"
+        return print("Success")
     else:
-        return "Fail"
-
-if __name__ == "__main__":
-    print(main(text))
+        return print("Fail")
