@@ -13,9 +13,9 @@ def checkmate(board):
     for row in arr:
         match row:
             case _ if len(row) != len(arr):
-                return "error"
+                return print("error")
             case _ if len(row) > 20:
-                return "error"
+                return print("error")
             case _:
                 pass
 
@@ -41,23 +41,14 @@ def checkmate(board):
                 case _:
                     pass
     
-    def append_func(member):
-        for i in member:
-            postion_of_every_pawn.append(i)
-
-    append_func(rook)
-    append_func(pawn)
-    append_func(bishop)
-    append_func(queen)
-
-    print(postion_of_every_pawn)
+    
 
     if len(king) != 1:
-        return "error"
+        return print("error")
     
     for row in arr:
         print(row)
-    
+ 
     print(f"r: {rook} k: {king}, q: {queen}, b: {bishop}, p:{pawn}")
     
     #condition check-----------
@@ -81,7 +72,7 @@ def checkmate(board):
 
     def move_down_right(x_new, y_new):
         while True:
-            if ((x_new,y_new) not in postion_of_every_pawn) and (y_new >= 0) and (x_new <= board_size):
+            if ([x_new,y_new] not in postion_of_every_pawn) and (y_new >= 0) and (x_new <= board_size):
                 move_path.append([x_new + 1, y_new - 1])
                 x_new += 1
                 y_new -= 1
@@ -96,7 +87,8 @@ def checkmate(board):
                 y_new += 1
             else:
                 break
-    def move_right(x_new):
+
+    def move_right(x_new, y):
         while True:
             if ((x_new,y) not in postion_of_every_pawn) and (x_new <= board_size):
                 move_path.append([x_new,y])
@@ -104,16 +96,15 @@ def checkmate(board):
             else:
                 break
 
-    def move_left(x_new):
+    def move_left(x_new, y):
         while True:
             if ((x_new,y) not in postion_of_every_pawn) and (x_new >= 0):
                 move_path.append([x_new,y])
                 x_new -= 1
-                print(x_new,y)
             else:
                 break
 
-    def move_up(y_new):
+    def move_up(x, y_new):
         while True:
             if ((x,y_new) not in postion_of_every_pawn) and (y_new <= board_size):
                 move_path.append([x,y_new])
@@ -121,7 +112,7 @@ def checkmate(board):
             else:
                 break
 
-    def move_down(y_new):
+    def move_down(x, y_new):
         while True:
             if ((x, y_new) not in postion_of_every_pawn) and (y_new >= 0):
                 move_path.append([x, y_new])
@@ -129,12 +120,11 @@ def checkmate(board):
             else:
                 break
 
-
     def rook_move(x, y):
-        move_right(x)
-        move_down(x)
-        move_up(y)
-        move_left(y)
+        move_left(x, y)
+        move_right(x, y)
+        move_up(x, y)
+        move_down(x, y)
 
     def bishop_move (x,y):
         move_up_right(x,y)
@@ -147,10 +137,10 @@ def checkmate(board):
         move_down_left(x, y)
         move_down_right(x, y)
         move_up_left(x, y)
-        move_right(x)
-        move_down(x)
-        move_up(y)
-        move_left(y)
+        move_left(x, y)
+        move_right(x, y)
+        move_up(x, y)
+        move_down(x, y)
 
     def pawn_move(x, y):
         if (x - 1 and y - 1) < board_size:
@@ -167,7 +157,6 @@ def checkmate(board):
     for i in bishop:
         bishop_move(i[0], i[1])
 
-    print(move_path)
     print(f"King: {king}")
 
     if king[0] in move_path:
